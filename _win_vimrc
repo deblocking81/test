@@ -4,6 +4,7 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 set autoindent
+set smartindent
 set backspace=indent,eol,start
 set ignorecase
 set smartcase
@@ -16,7 +17,7 @@ set nolinebreak
 set textwidth=0
 set formatoptions=q
 set ambiwidth=double
-set nonu
+set nu
 set title
 set showmatch
 set matchtime=2
@@ -25,18 +26,18 @@ set wildmenu wildmode=list:full
 set laststatus=2
 set statusline=%<%f\ %m%r%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l/%L,%v
 set whichwrap=b,s,[,],<,>,~
-" “Á‚Éw’è‚µ‚È‚¢
+" ç‰¹ã«æŒ‡å®šã—ãªã„
 " set fileencodings=utf-8,cp932,euc-jp,default,latin
-" •¶šƒR[ƒh•ÏX
+" æ–‡å­—ã‚³ãƒ¼ãƒ‰å¤‰æ›´
 nnoremap ,u :e ++enc=utf8<CR>
 nnoremap ,j :e ++enc=cp932<CR>
 " nnoremap ,j :e ++enc=ujis<CR>
 " nnoremap ,j :e ++enc=sjis<CR>
-" :TOhtml ‚Åg—p
+" :TOhtml ã§ä½¿ç”¨
 let html_use_css=1
 let html_use_encoding="utf-8"
-" ’uŠ·•K—v
-" ŒŸõƒEƒBƒ“ƒhƒEŠJ•Â‚ÌŠÖ”
+" ç½®æ›å¿…è¦
+" æ¤œç´¢ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é–‹é–‰ã®é–¢æ•°
 let s:quickfixwindow = "close"
 function! b:openCloseQuickfix()
 	if "open" ==? s:quickfixwindow
@@ -47,19 +48,19 @@ function! b:openCloseQuickfix()
 		copen
 	endif
 endfunction
-" ŒŸõƒEƒBƒ“ƒhƒEŠJ•Â
-nmap ,j :call b:openCloseQuickfix()
-" ’i—ˆÚ“®
+" æ¤œç´¢ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é–‹é–‰
+nmap <F2> :call b:openCloseQuickfix()
+" æ®µè½ç§»å‹•
 nmap <F9> [c<CR>
 nmap <F10> ]c<CR>
-" vimdiff ƒtƒ@ƒCƒ‹A ƒtƒ@ƒCƒ‹B ‚ÌŒã‚Ég‚¤
+" vimdiff ãƒ•ã‚¡ã‚¤ãƒ«A ãƒ•ã‚¡ã‚¤ãƒ«B ã®å¾Œã«ä½¿ã†
 nmap <F11> :diffget<CR>
 nmap <F12> :diffput<CR>
-" ‘OŒã·•ªs‚ğ”ñ•\¦
+" å‰å¾Œå·®åˆ†è¡Œã‚’éè¡¨ç¤º
 " set diffopt=filter,context:0
-" ƒtƒ@ƒCƒ‹‚ÌƒtƒHƒ‹ƒ_‚ğƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚É‚·‚é
+" ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ã‚©ãƒ«ãƒ€ã‚’ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ã™ã‚‹
 au BufEnter * execute ":lcd " . expand("%:p:h")
-" .bin ƒtƒ@ƒCƒ‹‚ğŠJ‚­‚ÉƒoƒCƒiƒŠƒ‚[ƒh‚É‚·‚éê‡
+" .bin ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãæ™‚ã«ãƒã‚¤ãƒŠãƒªãƒ¢ãƒ¼ãƒ‰ã«ã™ã‚‹å ´åˆ
 augroup Binary
 au!
 au BufReadPre *.bin let &bin=1
@@ -70,70 +71,79 @@ au BufWritePre *.bin endif
 au BufWritePost *.bin if &bin | %!xxd
 au BufWritePost *.bin set nomod | endif
 augroup END
-" ƒ^ƒu
+" ã‚¿ãƒ–
 vnoremap < <gv
 vnoremap > >gv
-" ŒŸõ—š—ğ
-nmap ,3 :colder<CR>
-nmap ,4 :cnewer<CR>
-" ƒtƒ@ƒCƒ‹ˆê——
+" æ¤œç´¢å±¥æ­´
+nmap <leader>1 :colder<CR>
+nmap <leader>2 :cnewer<CR>
+" ãƒ•ã‚¡ã‚¤ãƒ«ä¸€è¦§
 nmap ,l :ls<CR>
-" ƒtƒ@ƒCƒ‹
+" ãƒ•ã‚¡ã‚¤ãƒ«
 " nmap <F5> :bp<CR>
-nmap ,, :bp<CR>
 " nmap <F6> :bn<CR>
-nmap ,. :bn<CR>
-nmap <C-o> :args<CR>
-nmap <C-s> :wa<CR>
-imap <C-s> <esc> :wa<CR>
+nmap ,m :bp<CR>
+nmap ,, :bn<CR>
+nmap <C-o> :args 
+nmap <C-s> :w<CR>
+imap <C-s> <esc> :w<CR>
 nmap ,e :e .<CR>
-nmap <F7> :e .<CR>
-" •Â‚¶‚é
+nmap <F7> :cp<CR>
+" é–‰ã˜ã‚‹
 nmap ,d :bd<CR>
-" s”Ô†
+" è¡Œç•ªå·
 nmap ,n :set number!<CR>
-" ŒŸõƒnƒCƒ‰ƒCƒg‚ğÁ‚·
+" æ¤œç´¢ãƒã‚¤ãƒ©ã‚¤ãƒˆã‚’æ¶ˆã™
 nmap ,h :nohl<CR>
 " "[a-z]y / "[a-z]p
-" ƒRƒs[‚µ‚½“à—e
+" ã‚³ãƒ”ãƒ¼ã—ãŸå†…å®¹
 nmap ,f :reg<CR>
 " m[a-z][A-Z]:add / '[a-z]:jump
-" ƒ}[ƒNˆê——
-nmap ,m :marks<CR>
-" window ‘€ì
+" window æ“ä½œ
 nnoremap ,s :wincmd s<CR>
 nnoremap ,v :wincmd v<CR>
 nnoremap ,w :wincmd w<CR>
-" nnoremap ,c :wincmd c<CR>
 nnoremap ,o :wincmd o<CR>
+" nnoremap ,c :wincmd c<CR>
 nnoremap ,q :q<CR>
 nnoremap ,p :pwd<CR>
-nnoremap ,f <PageDown>
-nnoremap ,b <PageUp>
-" F‚Ìİ’è
+nnoremap <leader>f <PageDown>
+nnoremap <leader>d <PageUp>
+nnoremap <leader><RIGHT> :wincmd l<CR>
+nnoremap <leader><LEFT>  :wincmd h<CR>
+nnoremap <leader><UP>    :wincmd k<CR>
+nnoremap <leader><DOWN>  :wincmd j<CR>
+nnoremap ,<RIGHT> :wincmd l<CR>
+nnoremap ,<LEFT>  :wincmd h<CR>
+nnoremap ,<UP>    :wincmd k<CR>
+nnoremap ,<DOWN>  :wincmd j<CR>
+" è‰²ã®è¨­å®š
 colorscheme koehler
 " colorscheme solarized
-" highlight Comment term=standout ctermfg=2 gui=bold guifg=Green
-" highlight Constant term=standout ctermfg=2 gui=bold guifg=DarkRed
-" highlight Search term=standout cterm=none ctermfg=0 ctermbg=7 guifg=Blue guibg=Yellow
-" highlight Special term=reverse ctermfg=6 ctermbg=0 guifg=Red guibg=Black 
-" highlight Type term=reverse ctermfg=6 ctermbg=0 guifg=Red guibg=Black
-" highlight PreProc term=reverse ctermfg=6 ctermbg=0 guifg=Red guibg=Black
-" ƒtƒ@ƒCƒ‹ÅŒã‚ÉŠJ‚¢‚½ˆÊ’u‚ÉƒWƒƒƒ“ƒv
+" hi Comment term=standout ctermfg=2 gui=bold guifg=Green
+" hi Constant term=standout ctermfg=2 gui=bold guifg=DarkRed
+" hi Search term=standout cterm=none ctermfg=0 ctermbg=7 guifg=Blue guibg=Yellow
+" hi Special term=reverse ctermfg=6 ctermbg=0 guifg=Red guibg=Black 
+" hi Type term=reverse ctermfg=6 ctermbg=0 guifg=Red guibg=Black
+" hi PreProc term=reverse ctermfg=6 ctermbg=0 guifg=Red guibg=Black
+" hi LineNr ctermfg=grey ctermbg=4
+" hi MatchParen term=standout ctermbg=LightGrey ctermfg=Black guibg=LightGrey guifg=Black
+" hi PmenuSel ctermfg=grey ctermbg=4
+" ãƒ•ã‚¡ã‚¤ãƒ«æœ€å¾Œã«é–‹ã„ãŸä½ç½®ã«ã‚¸ãƒ£ãƒ³ãƒ—
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-" ƒ^ƒu‚ğ‰Â‹‰»
+" ã‚¿ãƒ–ã‚’å¯è¦–åŒ–
 nmap ,k :set list!<CR>
 set listchars=tab:>\ ,trail:^,eol:$
-" swp ƒtƒ@ƒCƒ‹‚ğì‚ç‚È‚¢
+" swp ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œã‚‰ãªã„
 set noswapfile
 set nobackup
-" ‰üs‚ÉƒRƒƒ“ƒg‚µ‚È‚¢
+" æ”¹è¡Œæ™‚ã«ã‚³ãƒ¡ãƒ³ãƒˆã—ãªã„
 set formatoptions-=ro
 augroup vimrc_group_formatoptions
 autocmd!
 autocmd FileType * setlocal formatoptions-=ro
 augroup END
-" •\¦s‚ÅˆÚ“®‚·‚éB•¨—sˆÚ“®‚Í Ctrl-n, Ctrl-p
+" è¡¨ç¤ºè¡Œã§ç§»å‹•ã™ã‚‹ã€‚ç‰©ç†è¡Œç§»å‹•ã¯ Ctrl-n, Ctrl-p
 nnoremap j gj
 nnoremap k gk
 nnoremap <Down> gj
@@ -144,88 +154,93 @@ nmap n nzz
 nmap N Nzz
 imap <c-k> <esc>
 nmap <c-z> <c-a>
-" rootŒ ŒÀ‚Å‘‚«‚İ
+" rootæ¨©é™ã§æ›¸ãè¾¼ã¿
 nmap ,@ :w !sudo tee % > /dev/null<CR>
-" ƒJ[ƒ\ƒ‹ƒ‚[ƒh
+" ã‚«ãƒ¼ã‚½ãƒ«ãƒ¢ãƒ¼ãƒ‰
 " set virtualedit=all
-" ƒNƒŠƒbƒvƒ{[ƒh(ƒRƒs[)
+" ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰(ã‚³ãƒ”ãƒ¼)
 vnoremap <C-C> "+y
-" ƒNƒŠƒbƒvƒ{[ƒh(“\•t) / shift + insert
+" ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰(è²¼ä»˜) / shift + insert
 " nmap ,v	 "+gP
-" yank‚µ‚½ƒeƒLƒXƒg‚ğƒNƒŠƒbƒvƒ{[ƒh‚É“ü‚ê‚é
+" yankã—ãŸãƒ†ã‚­ã‚¹ãƒˆã‚’ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«å…¥ã‚Œã‚‹
 set clipboard+=unnamed
-" visualmode‘I‘ğ‚É“ü‚ê‚é(vim)
+" visualmodeé¸æŠæ™‚ã«å…¥ã‚Œã‚‹(vim)
 " set clipboard += autoselect
-" visualmode‘I‘ğ‚É“ü‚ê‚é(gVim)
+" visualmodeé¸æŠæ™‚ã«å…¥ã‚Œã‚‹(gVim)
 " set guioptions+=a
-" vimrc •ÒW (reader = \)
-nnoremap <leader>e <C-w><C-v><C-l>:e $VIM/_vimrc<CR>
-" vimrc Ä“Ç‚İ‚İ
+" vimrc ç·¨é›† (reader = \)
+" nnoremap <leader>e <C-w><C-v><C-l>:e $VIM/_vimrc<CR>
+nnoremap <leader>e :e $VIM/_vimrc<CR>
+" vimrc å†èª­ã¿è¾¼ã¿
 nnoremap <leader>r :source $VIM/_vimrc<CR>
 " CTRL-Tab is Next window
-noremap <C-Tab> <C-W>w
-inoremap <C-Tab> <C-O><C-W>w
-cnoremap <C-Tab> <C-C><C-W>w
-onoremap <C-Tab> <C-C><C-W>w
-" ‰üsƒR[ƒh•ÏX
+" noremap <C-Tab> <C-W>w
+" inoremap <C-Tab> <C-O><C-W>w
+" cnoremap <C-Tab> <C-C><C-W>w
+" onoremap <C-Tab> <C-C><C-W>w
+nmap <C-Tab> :tabnext<CR>
+nmap <S-C-Tab> :tabprevious<CR>
+" æ”¹è¡Œã‚³ãƒ¼ãƒ‰å¤‰æ›´
 " :set ff=dos
 " :set ff=unix
-" ƒR[ƒh®Œ`‚Í v ‚Å‘I‘ğ‚µ‚½ŒãA=
-" ˆê‚Âã‚Ìs‚Æ“¯‚¶“à—e‚ğ“ü—Í‚Í Ctrl - y
-" sƒRƒs[‚Í yy
-" “\‚è•t‚¯‚Í p ‚Ü‚½‚Í P
-" sw’èƒRƒs[‚Í :1,2y
-" sw’è’uŠ·‚Í :1,2s/’uŠ·‘O/’uŠ·Œã/gc
-" (gc ‚ğ‚Â‚¯‚È‚¢‚Æ yes, no, all ‚È‚µ)
-" ƒEƒBƒ“ƒhƒE‚ğ“§–¾‚É‚·‚é(gvim)
+" ã‚³ãƒ¼ãƒ‰æ•´å½¢ã¯ v ã§é¸æŠã—ãŸå¾Œã€=
+" ä¸€ã¤ä¸Šã®è¡Œã¨åŒã˜å†…å®¹ã‚’å…¥åŠ›ã¯ Ctrl - y
+" è¡Œã‚³ãƒ”ãƒ¼ã¯ yy
+" è²¼ã‚Šä»˜ã‘ã¯ p ã¾ãŸã¯ P
+" è¡ŒæŒ‡å®šã‚³ãƒ”ãƒ¼ã¯ :1,2y
+" è¡ŒæŒ‡å®šç½®æ›ã¯ :1,2s/ç½®æ›å‰/ç½®æ›å¾Œ/gc
+" (gc ã‚’ã¤ã‘ãªã„ã¨ yes, no, all ãªã—)
+" ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é€æ˜ã«ã™ã‚‹(gvim)
 " autocmd FocusGained * set transparency=200
 " autocmd FocusLost * set transparency=200
-" ŠJ‚¢‚Ä‚¢‚éƒtƒ@ƒCƒ‹ƒpƒX‚ÉˆÚ“® :cd %:h
+" é–‹ã„ã¦ã„ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã«ç§»å‹• :cd %:h
 function! b:CdCurrentPath()
 	execute ":cd %:h"
 endfunction
 nmap ,9 :call b:CdCurrentPath()<CR>
-" #8 ‚Ìƒtƒ@ƒCƒ‹ƒpƒX‚ÉˆÚ“® :cd #8:p:h
+" #8 ã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã«ç§»å‹• :cd #8:p:h
 function! b:CdBufferPath(arg)
   execute ":cd #".a:arg.":p:h"
 endfunction
 nmap ,8 :ls<CR>:call b:CdBufferPath("")<LEFT><LEFT>
-" grep -n ‚Åƒtƒ@ƒCƒ‹o—Í‚µ‚½‚à‚Ì‚ğŠJ‚­
+" grep -n ã§ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›ã—ãŸã‚‚ã®ã‚’é–‹ã
 " vim -q xx.txt
-" grep -n ‚Ìƒtƒ@ƒCƒ‹‚ğŠJ‚¢‚Ä‚©‚ç cope ‚É•\¦
+" grep -n ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã„ã¦ã‹ã‚‰ cope ã«è¡¨ç¤º
 nmap <F5> :set errorformat=%f:%l:%m<CR>:cf %<CR>:cope<CR>
-" global -rx / -fx o—Íƒtƒ@ƒCƒ‹‚ğŒŸõƒEƒBƒ“ƒhƒE‚É•\¦
-nmap <F6> :call Bar()<CR>:set errorformat=%.%#\ %l\ %H%f\ %#%m<CR>:cf %<CR>:cope<CR>
-" gtags.vim (—v global)
-nmap <F1> :Gtags -g <C-R><C-W><CR>
-nmap <F2> <C-W>v:GtagsCursor<CR>
-nmap <F3> :Gtags -r <C-R><C-W><CR>
-" gf ‚ÅŠJ‚­‚½‚ß‚ÉƒtƒHƒ‹ƒ_ƒpƒX‚ğ’Ç‰Á
+" global -rx / -fx å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æ¤œç´¢ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«è¡¨ç¤º
+nmap <F6> :set errorformat=%.%#\ %l\ %H%f\ %#%m<CR>:cf %<CR>:cope<CR>
+" gtags.vim (è¦ global)
+" nmap <F1> :Gtags -g <C-R><C-W><CR>
+" nmap <F2> <C-W>v:GtagsCursor<CR>
+" 1,2 ä¸è¦ã€‚3,4å¿…è¦
+" nmap <F3> :Gtags -r <C-R><C-W><CR>
+" nmap <F4> :!gtags -v<CR>
+" gf ã§é–‹ããŸã‚ã«ãƒ•ã‚©ãƒ«ãƒ€ãƒ‘ã‚¹ã‚’è¿½åŠ 
 " :set path+=/xxx/xxx/xxx
-" ƒtƒ@ƒCƒ‹ƒpƒX‚ğ•\¦
+" ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’è¡¨ç¤º
 " :!echo `pwd`/%
-" [1] Œ`®‚Ì˜A”Ô‚ğ‚Â‚¯‚é
+" [1] å½¢å¼ã®é€£ç•ªã‚’ã¤ã‘ã‚‹
 " :7,33! cat -n | sed -e "s/\s*\([0-9]*\)\t\(.*\)/[\1] \2/"
 " r! cat -n #3 | gawk NR==1,NR==4 | sed -e "s/\s*\([0-9]*\)\t\(.*\)/[\1] \2/"
-" w’è”ÍˆÍ‚Ìs‚ğƒRƒs[
+" æŒ‡å®šç¯„å›²ã®è¡Œã‚’ã‚³ãƒ”ãƒ¼
 " :r! cat #1 | awk 'NR==41,NR==44'
-" w’è‚µ‚½s‚Ì‚İƒRƒs[
+" æŒ‡å®šã—ãŸè¡Œã®ã¿ã‚³ãƒ”ãƒ¼
 " :r! cat #1 | awk 'NR==41;NR==44'
-" ˆêƒtƒ@ƒCƒ‹‚ğŠJ‚­(vim I—¹‚É”jŠü)
+" ä¸€æ™‚ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã(vim çµ‚äº†æ™‚ã«ç ´æ£„)
 " :e `=tempname()`
-" İ’è‚ğƒfƒtƒHƒ‹ƒg‚É–ß‚·
+" è¨­å®šã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«æˆ»ã™
 " :set viminfo&
-" s‚Ì•¶š‚ÉƒJ[ƒ\ƒ‹ˆÚ“® : f ‚à‚µ‚­‚Í F ‚ÌŒã‚É•¶š‚ğ“ü—Íi‘O•û/Œã•ûj
-" windows—p
+" è¡Œã®æ–‡å­—ã«ã‚«ãƒ¼ã‚½ãƒ«ç§»å‹• : f ã‚‚ã—ãã¯ F ã®å¾Œã«æ–‡å­—ã‚’å…¥åŠ›ï¼ˆå‰æ–¹/å¾Œæ–¹ï¼‰
+" windowsç”¨
 " :!explorer .
 " :!explorer c:\
 " :!explorer %:h
 " :!explorer #3:h
-" for ‚ğg‚¤
+" for ã‚’ä½¿ã†
 " :!for *1; do echo $i; done
-" java ŒŸõ—á(or)
+" java æ¤œç´¢ä¾‹(or)
 " /public\|protected\|private
-" ‹óƒtƒ@ƒCƒ‹‚ğ•Û‘¶‚µ‚½‚çíœ
+" ç©ºãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜ã—ãŸã‚‰å‰Šé™¤
 augroup BUFWRITE_POSTDELETE
 au!
 autocmd BufWritePost * call BufWritePostDelete()
@@ -239,11 +254,11 @@ function! BufWritePostDelete()
 		call delete(expand('%:p'))
 	endif
 endfunction
-" ƒJ[ƒ\ƒ‹ˆÊ’u‚Ì’PŒê‚ğƒNƒŠƒbƒvƒ{[ƒh‚ÉƒRƒs[(yiw),’PŒê’PˆÊ‚ÌŒŸõ•¶š—ñ‚Éİ’è
+" ã‚«ãƒ¼ã‚½ãƒ«ä½ç½®ã®å˜èªã‚’ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ã‚³ãƒ”ãƒ¼(yiw),å˜èªå˜ä½ã®æ¤œç´¢æ–‡å­—åˆ—ã«è¨­å®š
 nnoremap <silent> * yiw:<C-u>call MySetSearch('""yiw', 'word')<CR>:let &hlsearch=&hlsearch<CR>
-" •¶š—ñ‘I‘ğ’†‚È‚çA‘I‘ğ•¶š—ñ‚ğŒŸõƒŒƒWƒXƒ^‚Éİ’è,ƒNƒŠƒbƒvƒ{[ƒh‚ÉƒRƒs[(yiw)
+" æ–‡å­—åˆ—é¸æŠä¸­ãªã‚‰ã€é¸æŠæ–‡å­—åˆ—ã‚’æ¤œç´¢ãƒ¬ã‚¸ã‚¹ã‚¿ã«è¨­å®š,ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ã‚³ãƒ”ãƒ¼(yiw)
 vnoremap <silent> * yiw:<C-u>call MySetSearch('""vgvy')<CR>:let &hlsearch=&hlsearch<CR>
-" ƒpƒ‰ƒ[ƒ^‚ªİ’è‚³‚ê‚Ä‚¢‚ê‚Î’PŒê’PˆÊŒŸõ
+" ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãŒè¨­å®šã•ã‚Œã¦ã„ã‚Œã°å˜èªå˜ä½æ¤œç´¢
 function! MySetSearch(cmd, ...)
 	let saved_reg = @"
 	if a:cmd != ''
@@ -257,30 +272,30 @@ function! MySetSearch(cmd, ...)
 	let @/ = pattern
 	let @" = saved_reg
 endfunction
-" Ü‚è‚½‚½‚İ‚ğ“WŠJ / Ü‚è‚½‚½‚Ş
+" æŠ˜ã‚ŠãŸãŸã¿ã‚’å±•é–‹ / æŠ˜ã‚ŠãŸãŸã‚€
 " zr / zm
-" 1s–Ú‚©‚çÅIs‚Ü‚Åíœ
+" 1è¡Œç›®ã‹ã‚‰æœ€çµ‚è¡Œã¾ã§å‰Šé™¤
 " :1,$d
-" s‚Ì‘}“ü(ƒJ[ƒ\ƒ‹ˆÚ“®) o ‚à‚µ‚­‚Í O
-" ƒJ[ƒ\ƒ‹‚ğˆÚ“®‚³‚¹‚¸‚És‘}“ü
-" ’PŒêŒŸõ‚Í * ¨ / ¨ Ctrl + r /
+" è¡Œã®æŒ¿å…¥(ã‚«ãƒ¼ã‚½ãƒ«ç§»å‹•) o ã‚‚ã—ãã¯ O
+" ã‚«ãƒ¼ã‚½ãƒ«ã‚’ç§»å‹•ã•ã›ãšã«è¡ŒæŒ¿å…¥
+" å˜èªæ¤œç´¢ã¯ * â†’ / â†’ Ctrl + r /
 nnoremap go :<C-u>call append('.', '')<CR>
 nnoremap gO :normal! O<ESC>j
-" Œ³‚É–ß‚·‚Í u
-" ‚â‚è’¼‚·‚Í Ctrl - r
-" •ÒW‘Oƒtƒ@ƒCƒ‹‚É–ß‚· :e!
-" •¡”s‚Ìæ“ª‚É“¯‚¶•¶š‚ğ“ü—Í
-" C-v ‚Å‘I‘ğŒã‚É I ‚Å“ü—Í‚µAEsc
-" •¡”s‚Ì––”ö‚É“¯‚¶•¶š‚ğ“ü—Í
+" å…ƒã«æˆ»ã™ã¯ u
+" ã‚„ã‚Šç›´ã™ã¯ Ctrl - r
+" ç·¨é›†å‰ãƒ•ã‚¡ã‚¤ãƒ«ã«æˆ»ã™ :e!
+" è¤‡æ•°è¡Œã®å…ˆé ­ã«åŒã˜æ–‡å­—ã‚’å…¥åŠ›
+" C-v ã§é¸æŠå¾Œã« I ã§å…¥åŠ›ã—ã€Esc
+" è¤‡æ•°è¡Œã®æœ«å°¾ã«åŒã˜æ–‡å­—ã‚’å…¥åŠ›
 " :set virtualedit=all 
-" C-v ‚Å‘I‘ğŒã‚É A ‚Å“ü—Í‚µAEsc
-" [Ql]
+" C-v ã§é¸æŠå¾Œã« A ã§å…¥åŠ›ã—ã€Esc
+" [å‚è€ƒ]
 " https://sites.google.com/site/fudist/Home/vim-nihongo-ban/tips
 " http://nanasi.jp/howto.html
 " http://www.kaoriya.net/software/vim/
 " http://www.cygwin.com/
 " http://sourceforge.jp/forum/forum.php?forum_id=5841&thread_id=34393
-" I—¹
+" çµ‚äº†
 nmap <C-d> :q<CR>
 " " google Test
 " " Don't load another plugin for this buffer
@@ -302,14 +317,14 @@ nmap <C-d> :q<CR>
 " endif
 " endfunction
 " nmap ,t :call CTest()
-" ƒEƒBƒ“ƒhƒEˆÚ“®
+" ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ç§»å‹•
 nnoremap <leader>^ <C-W>w
-" ÅŒã‚Ì•ÒWˆÊ’u‚ÉƒWƒƒƒ“ƒv
+" æœ€å¾Œã®ç·¨é›†ä½ç½®ã«ã‚¸ãƒ£ãƒ³ãƒ—
 nnoremap <leader>- `.
-"ƒJ[ƒ\ƒ‹•\¦Ø‚è‘Ö‚¦
+"ã‚«ãƒ¼ã‚½ãƒ«è¡¨ç¤ºåˆ‡ã‚Šæ›¿ãˆ
 nnoremap ,c :<C-u>setlocal cursorline!<CR>
 set nocursorline
-" virtual edit ‚ğØ‚è‘Ö‚¦‚é
+" virtual edit ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
 let s:switchvirtualedit = "none"
 function! b:switchVirtualEdit()
 	if "all" ==? s:switchvirtualedit
@@ -320,15 +335,15 @@ function! b:switchVirtualEdit()
 		set virtualedit=all
 	endif
 endfunction
-" Ø‚è‘Ö‚¦
+" åˆ‡ã‚Šæ›¿ãˆ
 nmap ,z :call b:switchVirtualEdit() <CR>
-" file:line ‚ğ•\¦
+" file:line ã‚’è¡¨ç¤º
 function! b:ShowLine()
 	echo expand("%").":".line('.')
 endfunction
 nmap ,2 :call b:ShowLine()<CR>
 " build.sh 2>&1 | tee make.log.txt
-" ƒtƒ@ƒCƒ‹‚Ìs”Ô†‚ÉƒWƒƒƒ“ƒv("file:line")
+" ãƒ•ã‚¡ã‚¤ãƒ«ã®è¡Œç•ªå·ã«ã‚¸ãƒ£ãƒ³ãƒ—("file:line")
 function! b:FileLineJump(f)
 	let s:s = split(a:f,":")
 	let s:fname = s:s[0:0]
@@ -336,4 +351,120 @@ function! b:FileLineJump(f)
 	execute ":e +".s:line[0]." ".s:fname[0]
 endfunction
 nmap ,1 :call b:FileLineJump("")<LEFT><LEFT>
+" Anywhere SID.
+function! s:SID_PREFIX()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
+endfunction
+" Set tabline.
+" ã‚¿ãƒ–æ©Ÿèƒ½
+function! s:my_tabline()  "{{{
+  let s = ''
+  for i in range(1, tabpagenr('$'))
+    let bufnrs = tabpagebuflist(i)
+    let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
+    let no = i  " display 0-origin tabpagenr.
+    let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
+    let title = fnamemodify(bufname(bufnr), ':t')
+    let title = '[' . title . ']'
+    let s .= '%'.i.'T'
+    let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
+    let s .= no . ':' . title
+    let s .= mod
+    let s .= '%#TabLineFill# '
+  endfor
+  let s .= '%#TabLineFill#%T%=%#TabLine#'
+  return s
+endfunction "}}}
+let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
+set showtabline=2 " å¸¸ã«ã‚¿ãƒ–ãƒ©ã‚¤ãƒ³ã‚’è¡¨ç¤º
+" The prefix key.
+nnoremap    [Tag]   <Nop>
+nmap    t [Tag]
+" Tab jump
+" t1 ã§1ç•ªå·¦ã®ã‚¿ãƒ–ã€t2 ã§1ç•ªå·¦ã‹ã‚‰2ç•ªç›®ã®ã‚¿ãƒ–ã«ã‚¸ãƒ£ãƒ³ãƒ—
+for n in range(1, 9)
+  execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
+endfor
+" tc æ–°ã—ã„ã‚¿ãƒ–ã‚’ä¸€ç•ªå³ã«ä½œã‚‹
+map <silent> [Tag]c :tablast <bar> tabnew<CR>
+" tx ã‚¿ãƒ–ã‚’é–‰ã˜ã‚‹
+map <silent> [Tag]x :tabclose<CR>
+" tn æ¬¡ã®ã‚¿ãƒ–
+map <silent> [Tag]n :tabnext<CR>
+" tp å‰ã®ã‚¿ãƒ–
+map <silent> [Tag]p :tabprevious<CR>
+"vim å±¥æ­´ä¿å­˜
+set undodir=~/.vim_undo
+set undofile
+" ãƒãƒ¼ã‚¯æ©Ÿèƒ½
+" nmap ,m :marks<CR>
+" åŸºæœ¬ãƒãƒƒãƒ—
+nnoremap [Mark] <Nop>
+nmap m [Mark]
+" ç¾åœ¨ä½ç½®ã‚’ãƒãƒ¼ã‚¯
+if !exists('g:markrement_char')
+    let g:markrement_char = [
+    \     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    \     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+    \ ]
+endif
+nnoremap <silent>[Mark]m :<C-u>call <SID>AutoMarkrement()<CR>
+function! s:AutoMarkrement()
+    if !exists('b:markrement_pos')
+        let b:markrement_pos = 0
+    else
+        let b:markrement_pos = (b:markrement_pos + 1) % len(g:markrement_char)
+    endif
+    execute 'mark' g:markrement_char[b:markrement_pos]
+    echo 'marked' g:markrement_char[b:markrement_pos]
+endfunction
+" æ¬¡/å‰ã®ãƒãƒ¼ã‚¯
+nnoremap [Mark]n ]`
+nnoremap [Mark]p [`
+" ä¸€è¦§è¡¨ç¤º
+nnoremap [Mark]l :<C-u>marks<CR>
+" ãƒãƒƒãƒ•ã‚¡èª­ã¿è¾¼ã¿æ™‚ã«ãƒãƒ¼ã‚¯ã‚’åˆæœŸåŒ–
+" autocmd MyAutoCmd BufReadPost * delmarks!
+" è¡Œæœ«ã®ä¸­æ‹¬å¼§ã§æ”¹è¡Œã™ã‚‹ã¨,å¯¾å¿œã™ã‚‹ä¸­æ‹¬å¼§ã‚’æŒ¿å…¥
+" smartinput 80è¡Œç›® {} å‰Šé™¤, 160è¡Œç›® {} å‰Šé™¤
+inoremap <expr><CR> <SID>ExCr()
+function! s:ExCr()
+    if col('.') != col('$')
+        return "\<CR>"
+    endif
+    let l = getline('.')
+    if l =~ '{$'
+        return "\<CR>}\<Up>\<End>\<CR>"
+    elseif l =~ '($'
+        return "\<CR>)\<Up>\<End>\<CR>"
+    elseif l =~ '[$'
+        return "\<CR>]\<Up>\<End>\<CR>"
+    elseif l =~ '*$'
+        return "\<CR>*//\<Up>\<End>\<CR>\ "
+    else
+        return "\<CR>"
+    endif
+endfunction
+" smart input ON/OFFã€€åˆ‡ã‚Šæ›¿ãˆ
+let s:switch_smartinput = "yes"
+function! b:switchSmartInput()
+  if "yes" ==? s:switch_smartinput
+    let s:switch_smartinput="no"
+    call smartinput#clear_rules()
+  else
+    let s:switch_smartinput="yes"
+    call smartinput#define_default_rules()
+  endif
+endfunction
+" ã‚­ãƒ¼å‰²ã‚Šå½“ã¦
+nmap <leader>s :call b:switchSmartInput()<CR>
+" ç¾åœ¨è¡Œã‹ã‚‰ã®ç›¸å¯¾è¡Œç•ªå·ã«åˆ‡ã‚Šæ›¿ãˆ
+nnoremap ,. :<C-u>setlocal relativenumber!<CR>
+" æ—¥ä»˜ã‚’æŒ¿å…¥
+nmap ,d :call append(line(".")-1, "[" . strftime("%Y/%m/%d") . "]")<CR>
+" æ™‚åˆ»ã‚’æŒ¿å…¥
+nmap ,t :call append(line(".")-1, "[" . strftime("%H:%M:%S") . "]")<CR>
+" æ—¥ä»˜ã¨æ™‚åˆ»ã‚’æŒ¿å…¥
+nmap ,4 :call append(line(".")-1, "[" . strftime("%Y/%m/%d %H:%M:%S") . "]")<CR>
+
 
