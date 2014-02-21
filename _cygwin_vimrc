@@ -1,0 +1,472 @@
+" set visualbell
+syntax on
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set autoindent
+set smartindent
+set backspace=indent,eol,start
+set ignorecase
+set smartcase
+set magic
+set wrapscan
+set hlsearch
+set smartcase
+set nowrap
+set nolinebreak
+set textwidth=0
+set formatoptions=q
+set ambiwidth=double
+set nu
+set title
+set showmatch
+set matchtime=2
+set incsearch
+set wildmenu wildmode=list:full
+set laststatus=2
+set statusline=%<%f\ %m%r%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l/%L,%v
+set whichwrap=b,s,[,],<,>,~
+" 特に指定しない
+" set fileencodings=utf-8,cp932,euc-jp,default,latin
+" 文字コード変更
+nnoremap ,u :e ++enc=utf8<CR>
+nnoremap ,j :e ++enc=cp932<CR>
+" nnoremap ,j :e ++enc=ujis<CR>
+" nnoremap ,j :e ++enc=sjis<CR>
+" :TOhtml で使用
+let html_use_css=1
+let html_use_encoding="utf-8"
+" 置換必要
+" 検索ウィンドウ開閉の関数
+let s:quickfixwindow = "close"
+function! b:openCloseQuickfix()
+	if "open" ==? s:quickfixwindow
+		let s:quickfixwindow = "close"
+		cclose
+	else
+		let s:quickfixwindow = "open"
+		copen
+	endif
+endfunction
+" 検索ウィンドウ開閉
+nmap <F2> :call b:openCloseQuickfix()
+" 段落移動
+nmap <F9> [c<CR>
+nmap <F10> ]c<CR>
+" vimdiff ファイルA ファイルB の後に使う
+nmap <F11> :diffget<CR>
+nmap <F12> :diffput<CR>
+" 前後差分行を非表示
+" set diffopt=filter,context:0
+" ファイルのフォルダをカレントディレクトリにする
+au BufEnter * execute ":lcd " . expand("%:p:h")
+" .bin ファイルを開く時にバイナリモードにする場合
+augroup Binary
+au!
+au BufReadPre *.bin let &bin=1
+au BufReadPost *.bin if &bin | %!xxd
+au BufReadPost *.bin set ft=xxd | endif
+au BufWritePre *.bin if &bin | %!xxd -r
+au BufWritePre *.bin endif
+au BufWritePost *.bin if &bin | %!xxd
+au BufWritePost *.bin set nomod | endif
+augroup END
+" タブ
+vnoremap < <gv
+vnoremap > >gv
+" 検索履歴
+nmap <leader>1 :colder<CR>
+nmap <leader>2 :cnewer<CR>
+" ファイル一覧
+nmap ,l :ls<CR>
+" ファイル
+" nmap <F5> :bp<CR>
+" nmap <F6> :bn<CR>
+nmap ,m :bp<CR>
+nmap ,, :bn<CR>
+nmap <C-o> :args 
+nmap <C-s> :w<CR>
+imap <C-s> <esc> :w<CR>
+nmap ,e :e .<CR>
+" nmap <F7> :e .<CR>
+nmap <F7> :cp<CR>
+nmap <F8> :cn<CR>
+" 閉じる
+nmap ,5 :ls<CR>:bd
+" 行番号
+nmap ,n :set number!<CR>
+" 検索ハイライトを消す
+nmap ,h :nohl<CR>
+" "[a-z]y / "[a-z]p
+" コピーした内容
+nmap ,f :reg<CR>
+" m[a-z][A-Z]:add / '[a-z]:jump
+" window 操作
+nnoremap ,s :wincmd s<CR>
+nnoremap ,v :wincmd v<CR>
+nnoremap ,w :wincmd w<CR>
+nnoremap ,o :wincmd o<CR>
+" nnoremap ,c :wincmd c<CR>
+nnoremap ,q :q<CR>
+nnoremap ,p :pwd<CR>
+nnoremap <leader>f <PageDown>
+nnoremap <leader>d <PageUp>
+nnoremap <leader><RIGHT> :wincmd l<CR>
+nnoremap <leader><LEFT>  :wincmd h<CR>
+nnoremap <leader><UP>    :wincmd k<CR>
+nnoremap <leader><DOWN>  :wincmd j<CR>
+nnoremap ,<RIGHT> :wincmd l<CR>
+nnoremap ,<LEFT>  :wincmd h<CR>
+nnoremap ,<UP>    :wincmd k<CR>
+nnoremap ,<DOWN>  :wincmd j<CR>
+" 色の設定
+colorscheme koehler
+" colorscheme solarized
+hi Comment term=standout ctermfg=2 gui=bold guifg=Green
+hi Constant term=standout ctermfg=2 gui=bold guifg=DarkRed
+hi Search term=standout cterm=none ctermfg=0 ctermbg=7 guifg=Blue guibg=Yellow
+hi Special term=reverse ctermfg=6 ctermbg=0 guifg=Red guibg=Black 
+hi Type term=reverse ctermfg=6 ctermbg=0 guifg=Red guibg=Black
+hi PreProc term=reverse ctermfg=6 ctermbg=0 guifg=Red guibg=Black
+hi LineNr ctermfg=grey ctermbg=4
+hi MatchParen term=standout ctermbg=LightGrey ctermfg=Black guibg=LightGrey guifg=Black
+hi PmenuSel ctermfg=grey ctermbg=4
+" ファイル最後に開いた位置にジャンプ
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+" タブを可視化
+nmap ,k :set list!<CR>
+set listchars=tab:>\ ,trail:^,eol:$
+" swp ファイルを作らない
+set noswapfile
+set nobackup
+" 改行時にコメントしない
+set formatoptions-=ro
+augroup vimrc_group_formatoptions
+autocmd!
+autocmd FileType * setlocal formatoptions-=ro
+augroup END
+" 表示行で移動する。物理行移動は Ctrl-n, Ctrl-p
+nnoremap j gj
+nnoremap k gk
+nnoremap <Down> gj
+nnoremap <Up> gk
+nnoremap j jzz
+nnoremap k kzz
+nmap n nzz
+nmap N Nzz
+imap <c-k> <esc>
+nmap <c-z> <c-a>
+" root権限で書き込み
+nmap ,@ :w !sudo tee % > /dev/null<CR>
+" カーソルモード
+" set virtualedit=all
+" クリップボード(コピー)
+vnoremap <C-C> "+y
+" クリップボード(貼付) / shift + insert
+" nmap ,v	 "+gP
+" yankしたテキストをクリップボードに入れる
+set clipboard+=unnamed
+" visualmode選択時に入れる(vim)
+" set clipboard += autoselect
+" visualmode選択時に入れる(gVim)
+" set guioptions+=a
+" vimrc 編集 (reader = \)
+" nnoremap <leader>e <C-w><C-v><C-l>:e ~/_vimrc<CR>
+nnoremap <leader>e :e ~/_vimrc<CR>
+" vimrc 再読み込み
+nnoremap <leader>r :source ~/_vimrc<CR>
+" CTRL-Tab is Next window
+" noremap <C-Tab> <C-W>w
+" inoremap <C-Tab> <C-O><C-W>w
+" cnoremap <C-Tab> <C-C><C-W>w
+" onoremap <C-Tab> <C-C><C-W>w
+" nmap <C-PageUp> :tabnext<CR>
+" nmap <S-PageDown> :tabprevious<CR>
+" 改行コード変更
+" :set ff=dos
+" :set ff=unix
+" コード整形は v で選択した後、=
+" 一つ上の行と同じ内容を入力は Ctrl - y
+" 行コピーは yy
+" 貼り付けは p または P
+" 行指定コピーは :1,2y
+" 行指定置換は :1,2s/置換前/置換後/gc
+" (gc をつけないと yes, no, all なし)
+" ウィンドウを透明にする(gvim)
+" autocmd FocusGained * set transparency=200
+" autocmd FocusLost * set transparency=200
+" 開いているファイルパスに移動 :cd %:h
+function! b:CdCurrentPath()
+	execute ":cd %:h"
+endfunction
+nmap ,9 :call b:CdCurrentPath()<CR>
+" #8 のファイルパスに移動 :cd #8:p:h
+function! b:CdBufferPath(arg)
+  execute ":cd #".a:arg.":p:h"
+endfunction
+nmap ,8 :ls<CR>:call b:CdBufferPath("")<LEFT><LEFT>
+" grep -n でファイル出力したものを開く
+" vim -q xx.txt
+" grep -n のファイルを開いてから cope に表示
+nmap <F5> :set errorformat=%f:%l:%m<CR>:cf %<CR>:cope<CR>
+" global -rx / -fx 出力ファイルを検索ウィンドウに表示
+" nmap <F6> :set errorformat=%.%#\ %l\ %H%f\ %#%m<CR>:cf %<CR>:cope<CR>
+nmap <F6> :set errorformat=%.%#\ %l\ %H%f\ %#%m<CR>:cf %<CR>:cope<CR>
+" gtags.vim (要 global)
+" nmap <F1> :Gtags -g <C-R><C-W><CR>
+" nmap <F2> <C-W>v:GtagsCursor<CR>
+" 1,2 不要 3,4 必要
+" nmap <F3> :Gtags -r <C-R><C-W><CR>
+" nmap <F4> :!gtags -v<CR>
+" gf で開くためにフォルダパスを追加
+" :set path+=/xxx/xxx/xxx
+" ファイルパスを表示
+" :!echo `pwd`/%
+" [1] 形式の連番をつける
+" :7,33! cat -n | sed -e "s/\s*\([0-9]*\)\t\(.*\)/[\1] \2/"
+" r! cat -n #3 | gawk NR==1,NR==4 | sed -e "s/\s*\([0-9]*\)\t\(.*\)/[\1] \2/"
+" 指定範囲の行をコピー
+" :r! cat #1 | awk 'NR==41,NR==44'
+" 指定した行のみコピー
+" :r! cat #1 | awk 'NR==41;NR==44'
+" 一時ファイルを開く(vim 終了時に破棄)
+" :e `=tempname()`
+" 設定をデフォルトに戻す
+" :set viminfo&
+" 行の文字にカーソル移動 : f もしくは F の後に文字を入力（前方/後方）
+" windows用
+" :!explorer .
+" :!explorer c:\
+" :!explorer %:h
+" :!explorer #3:h
+" for を使う
+" :!for *1; do echo $i; done
+" java 検索例(or)
+" /public\|protected\|private
+" 空ファイルを保存したら削除
+augroup BUFWRITE_POSTDELETE
+au!
+autocmd BufWritePost * call BufWritePostDelete()
+augroup END
+function! BufWritePostDelete()
+	let crlen = 0
+	if &binary == 0
+		let crlen = &ff == 'dos' ? 2 : 1
+	endif
+	if getfsize(expand('%:p')) <= crlen
+		call delete(expand('%:p'))
+	endif
+endfunction
+" カーソル位置の単語をクリップボードにコピー(yiw),単語単位の検索文字列に設定
+nnoremap <silent> * yiw:<C-u>call MySetSearch('""yiw', 'word')<CR>:let &hlsearch=&hlsearch<CR>
+" 文字列選択中なら、選択文字列を検索レジスタに設定,クリップボードにコピー(yiw)
+vnoremap <silent> * yiw:<C-u>call MySetSearch('""vgvy')<CR>:let &hlsearch=&hlsearch<CR>
+" パラメータが設定されていれば単語単位検索
+function! MySetSearch(cmd, ...)
+	let saved_reg = @"
+	if a:cmd != ''
+		silent exec 'normal! '.a:cmd
+	endif
+	let pattern = escape(@", '\\/.*$^~[]')
+	let pattern = substitute(pattern, '\n$', '','')
+	if a:0 > 0
+		let pattern = '\<'.pattern.'\>'
+	endif
+	let @/ = pattern
+	let @" = saved_reg
+endfunction
+" 折りたたみを展開 / 折りたたむ
+" zr / zm
+" 1行目から最終行まで削除
+" :1,$d
+" 行の挿入(カーソル移動) o もしくは O
+" カーソルを移動させずに行挿入
+" 単語検索は * → / → Ctrl + r /
+nnoremap go :<C-u>call append('.', '')<CR>
+nnoremap gO :normal! O<ESC>j
+" 元に戻すは u
+" やり直すは Ctrl - r
+" 編集前ファイルに戻す :e!
+" 複数行の先頭に同じ文字を入力
+" C-v で選択後に I で入力し、Esc
+" 複数行の末尾に同じ文字を入力
+" :set virtualedit=all 
+" C-v で選択後に A で入力し、Esc
+" [参考]
+" https://sites.google.com/site/fudist/Home/vim-nihongo-ban/tips
+" http://nanasi.jp/howto.html
+" http://www.kaoriya.net/software/vim/
+" http://www.cygwin.com/
+" http://sourceforge.jp/forum/forum.php?forum_id=5841&thread_id=34393
+" 終了
+nmap <C-d> :q<CR>
+" " google Test
+" " Don't load another plugin for this buffer
+" let b:did_ftplugin_after = 1 
+" let b:did_first_call = 0 
+" " run c test 
+" function! CTest()
+" w% 
+" let r_fname = expand("%:r")
+" if r_fname =~ "Test$"
+" execute ":silent !/usr/bin/g++ -c ".r_fname.".c"
+" execute ":silent !/usr/bin/g++ ".r_fname.".o gtest/gtest_main.o gtest/gtest-all.o"
+" execute ":!/opt/local/bin/clear; ./a.out"
+" else 
+" let r_fname = r_fname."Test"
+" execute ":silent !/usr/bin/g++ -c ".r_fname.".c"
+" execute ":silent !/usr/bin/g++ ".r_fname.".o gtest/gtest_main.o gtest/gtest-all.o"
+" execute ":!/opt/local/bin/clear; ./a.out"
+" endif
+" endfunction
+" nmap ,t :call CTest()
+" ウィンドウ移動
+nnoremap <leader>^ <C-W>w
+" 最後の編集位置にジャンプ
+nnoremap <leader>- `.
+"カーソル表示切り替え
+nnoremap ,c :<C-u>setlocal cursorline!<CR>
+set nocursorline
+" virtual edit を切り替える
+let s:switchvirtualedit = "none"
+function! b:switchVirtualEdit()
+	if "all" ==? s:switchvirtualedit
+		let s:switchvirtualedit="none"
+		set virtualedit=""
+	else
+		let s:switchvirtualedit="all"
+		set virtualedit=all
+	endif
+endfunction
+" 切り替え
+nmap ,z :call b:switchVirtualEdit() <CR>
+" file:line を表示
+function! b:ShowLine()
+	echo expand("%").":".line('.')
+endfunction
+nmap ,2 :call b:ShowLine()<CR>
+" build.sh 2>&1 | tee make.log.txt
+" ファイルの行番号にジャンプ("file:line")
+function! b:FileLineJump(f)
+	let s:s = split(a:f,":")
+	let s:fname = s:s[0:0]
+	let s:line = s:s[1:1]
+	execute ":e +".s:line[0]." ".s:fname[0]
+endfunction
+nmap ,1 :call b:FileLineJump("")<LEFT><LEFT>
+" Anywhere SID.
+function! s:SID_PREFIX()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
+endfunction
+" Set tabline.
+function! s:my_tabline()  "{{{
+  let s = ''
+  for i in range(1, tabpagenr('$'))
+    let bufnrs = tabpagebuflist(i)
+    let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
+    let no = i  " display 0-origin tabpagenr.
+    let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
+    let title = fnamemodify(bufname(bufnr), ':t')
+    let title = '[' . title . ']'
+    let s .= '%'.i.'T'
+    let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
+    let s .= no . ':' . title
+    let s .= mod
+    let s .= '%#TabLineFill# '
+  endfor
+  let s .= '%#TabLineFill#%T%=%#TabLine#'
+  return s
+endfunction "}}}
+let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
+set showtabline=2 " 常にタブラインを表示
+" The prefix key.
+nnoremap    [Tag]   <Nop>
+nmap    t [Tag]
+" Tab jump
+" t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
+for n in range(1, 9)
+  execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
+endfor
+" tc 新しいタブを一番右に作る
+map <silent> [Tag]c :tablast <bar> tabnew<CR>
+" tx タブを閉じる
+map <silent> [Tag]x :tabclose<CR>
+" tn 次のタブ
+map <silent> [Tag]n :tabnext<CR>
+" tp 前のタブ
+map <silent> [Tag]p :tabprevious<CR>
+"vim 履歴保存
+set undodir=~/.vim_undo
+set undofile
+" マーク一覧
+" nmap ,m :marks<CR>
+" 基本マップ
+nnoremap [Mark] <Nop>
+nmap m [Mark]
+" 現在位置をマーク
+if !exists('g:markrement_char')
+    let g:markrement_char = [
+    \     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    \     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+    \ ]
+endif
+nnoremap <silent>[Mark]m :<C-u>call <SID>AutoMarkrement()<CR>
+function! s:AutoMarkrement()
+    if !exists('b:markrement_pos')
+        let b:markrement_pos = 0
+    else
+        let b:markrement_pos = (b:markrement_pos + 1) % len(g:markrement_char)
+    endif
+    execute 'mark' g:markrement_char[b:markrement_pos]
+    echo 'marked' g:markrement_char[b:markrement_pos]
+endfunction
+" 次/前のマーク
+nnoremap [Mark]n ]`
+nnoremap [Mark]p [`
+" 一覧表示
+nnoremap [Mark]l :<C-u>marks<CR>
+" バッファ読み込み時にマークを初期化
+" autocmd MyAutoCmd BufReadPost * delmarks!
+" 行末の中括弧で改行すると,対応する中括弧を挿入
+" smartinput 80行目 {} 削除, 160行目 {} 削除
+inoremap <expr><CR> <SID>ExCr()
+function! s:ExCr()
+    if col('.') != col('$')
+        return "\<CR>"
+    endif
+    let l = getline('.')
+    if l =~ '{$'
+        return "\<CR>}\<Up>\<End>\<CR>"
+    elseif l =~ '($'
+        return "\<CR>)\<Up>\<End>\<CR>"
+    elseif l =~ '[$'
+        return "\<CR>]\<Up>\<End>\<CR>"
+    elseif l =~ '*$'
+        return "\<CR>*//\<Up>\<End>\<CR>\ "
+    else
+        return "\<CR>"
+    endif
+endfunction
+" smart input ON/OFF　切り替え
+let s:switch_smartinput = "yes"
+function! b:switchSmartInput()
+  if "yes" ==? s:switch_smartinput
+    let s:switch_smartinput="no"
+    call smartinput#clear_rules()
+  else
+    let s:switch_smartinput="yes"
+    call smartinput#define_default_rules()
+  endif
+endfunction
+" キー割り当て
+nmap <leader>s :call b:switchSmartInput()<CR>
+" 現在行からの相対行番号に切り替え
+nnoremap ,. :<C-u>setlocal relativenumber!<CR>
+" 日付を挿入
+nmap ,d :call append(line(".")-1, "[" . strftime("%Y/%m/%d") . "]")<CR>
+" 時刻を挿入
+nmap ,t :call append(line(".")-1, "[" . strftime("%H:%M:%S") . "]")<CR>
+" 日付と時刻を挿入
+nmap ,4 :call append(line(".")-1, "[" . strftime("%Y/%m/%d %H:%M:%S") . "]")<CR>
+
+

@@ -1,0 +1,30 @@
+alias a="alias"
+alias l="screen -list"
+alias x="screen -x"
+alias S="screen -S"
+# ctrl-s undefine
+stty stop undef
+# history
+HISTTIMEFORMAT='%Y-%m-%d %T ';
+export HISTSIZE=40000
+export FILESIZE=40000
+function share_history {
+  history -a
+  history -c
+  history -r
+}
+PROMPT_COMMAND='share_history'
+shopt -u histappend
+alias a="alias"
+alias e="explorer"
+alias ls='ls --show-control-chars --color=auto'
+alias g=". /home/xxx/shell/get_cygpath.sh"
+alias c=". /home/xxx/shell/cd_cygpath.sh"
+alias d='echo "`date +%Y_%m_%d`_diary.txt"'
+export DISPLAY=127.0.0.1:0
+# export CMAKE_CXX_COMPILER="g++"
+# export CMAKE_C_COMPILER="gcc"
+# export LANG=C
+export LANG=ja_JP.UTF-8
+alias ll="ls -l"
+
