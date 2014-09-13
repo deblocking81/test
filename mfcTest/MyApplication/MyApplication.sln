@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mfcTest", "mfcTest", "{FFCCEE58-02B5-4EDD-B6BA-BFE09B2D0D97}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mfcTest", "..\mfcTest\mfcTest\mfcTest.vcxproj", "{2FD65D08-B759-4E00-8129-26CC43FAB5B0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GoogleMock", "GoogleMock", "{4C5DAB22-109E-49D4-9DDB-9EA3EB13C5F9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gmock", "..\gmock-1.7.0\msvc\2010\gmock.vcxproj", "{34681F0D-CE45-415D-B5F2-5C662DFE3BD5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gmock_main", "..\gmock-1.7.0\msvc\2010\gmock_main.vcxproj", "{E4EF614B-30DF-4954-8C53-580A0BF6B589}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gmock_test", "..\gmock-1.7.0\msvc\2010\gmock_test.vcxproj", "{F10D22F8-AC7B-4213-8720-608E7D878CD2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2FD65D08-B759-4E00-8129-26CC43FAB5B0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2FD65D08-B759-4E00-8129-26CC43FAB5B0}.Debug|Win32.Build.0 = Debug|Win32
+		{2FD65D08-B759-4E00-8129-26CC43FAB5B0}.Release|Win32.ActiveCfg = Release|Win32
+		{2FD65D08-B759-4E00-8129-26CC43FAB5B0}.Release|Win32.Build.0 = Release|Win32
+		{34681F0D-CE45-415D-B5F2-5C662DFE3BD5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{34681F0D-CE45-415D-B5F2-5C662DFE3BD5}.Debug|Win32.Build.0 = Debug|Win32
+		{34681F0D-CE45-415D-B5F2-5C662DFE3BD5}.Release|Win32.ActiveCfg = Release|Win32
+		{34681F0D-CE45-415D-B5F2-5C662DFE3BD5}.Release|Win32.Build.0 = Release|Win32
+		{E4EF614B-30DF-4954-8C53-580A0BF6B589}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E4EF614B-30DF-4954-8C53-580A0BF6B589}.Debug|Win32.Build.0 = Debug|Win32
+		{E4EF614B-30DF-4954-8C53-580A0BF6B589}.Release|Win32.ActiveCfg = Release|Win32
+		{E4EF614B-30DF-4954-8C53-580A0BF6B589}.Release|Win32.Build.0 = Release|Win32
+		{F10D22F8-AC7B-4213-8720-608E7D878CD2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F10D22F8-AC7B-4213-8720-608E7D878CD2}.Debug|Win32.Build.0 = Debug|Win32
+		{F10D22F8-AC7B-4213-8720-608E7D878CD2}.Release|Win32.ActiveCfg = Release|Win32
+		{F10D22F8-AC7B-4213-8720-608E7D878CD2}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2FD65D08-B759-4E00-8129-26CC43FAB5B0} = {FFCCEE58-02B5-4EDD-B6BA-BFE09B2D0D97}
+		{34681F0D-CE45-415D-B5F2-5C662DFE3BD5} = {4C5DAB22-109E-49D4-9DDB-9EA3EB13C5F9}
+		{E4EF614B-30DF-4954-8C53-580A0BF6B589} = {4C5DAB22-109E-49D4-9DDB-9EA3EB13C5F9}
+		{F10D22F8-AC7B-4213-8720-608E7D878CD2} = {4C5DAB22-109E-49D4-9DDB-9EA3EB13C5F9}
+	EndGlobalSection
+EndGlobal
