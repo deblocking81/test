@@ -1,0 +1,53 @@
+
+テキストファイルの行数を取得 
+テキストファイル（CSVファイル含む）の行数（件数）を瞬時に取得         　　　　　　　(159)
+使用する前に、[プロジェクト]→[参照設定]で Microsoft Scripting Runtime の参照にチェックを入
+れておいて下さい。
+そして Form に CommandButton １個と Label　１個を貼り付けておいて下さい。
+テキストファイルのOpenはその他のオブジェクトでも操作できますが、ここではFileSystemObject 
+オブジェクトのOpenTextFileメソッドを使用します。OpenTextFileの構文は下記の通りです。
+構文  object.OpenTextFile(filename, iomode, create, format)
+
+filename 　作成するファイル名前を指定します。 
+
+iomode 　 省略可能です。指定する値については、下記の「設定値」を参照してください。
+　　　定　数 　　　 　値 　　　　内　　　　　　　　容 
+　　ForReading　　　  1 　ファイルを読み取り専用として開きます。
+　　ForWriting　　　　 2 　ファイルを書き込み専用として開きます。 
+　　ForAppending 　　8 　ファイルを開き、ファイルの最後に追加して書き込みます。 
+
+create　　省略可能です。引数 filename で指定したファイルが存在しなかった場合に新しいファイ
+　　　　　　ルを作成するかどうかを示すブール値を指定します。新しいファイルを作成する場合は
+　　　　　　真 (true) を、ファイルを作成しない場合は偽 (false) を指定します。省略した場合、新し
+　　　　　　くファイルは作成されません。
+
+format　　省略可能です。開くファイルの形式を示す値を指定します。指定する値については、下
+　　　　　　記を参照してください。省略した場合、ASCII ファイルとしてファイルが開かれます。
+　　　　値　　　　　　　　　　 　　　　内　　　　　　　　　容 
+　　TristateTrue 　　　　　　ファイルを Unicode ファイルとして開きます。 
+　　TristateFalse 　　　　　 ファイルを ASCII ファイルとして開きます。 
+　　TristateUseDefault 　　システム デフォルトを使ってファイルを開きます。 
+　	Option Explicit　　 'SampleNo=159　WindowsXP VB6.0(SP5) 2002.07.03
+
+Private Sub Command1_Click()
+　　Dim Fso　　 As New FileSystemObject
+　　Dim FsoTS　 As TextStream
+
+　　'ファイルの末尾から書き込みモードで開きます
+　　Set FsoTS = Fso.OpenTextFile("test.txt", ForAppending)
+　　'現在のファイル ポインターの位置を行番号で取得します
+　　Label1.Caption = "ファイルの行数は " & FsoTS.Line & " 行です。"
+　　FsoTS.Close
+　　Set FsoTS = Nothing
+
+　　'下記でも取得できます。
+　　Debug.Print CreateObject("Scripting.FileSystemObject"). _
+　　　　　　　　OpenTextFile("C:\test.csv", ForAppending).Line - 1
+End Sub
+　
+ファイルをすべて読込む事なくテキストファイルの行数を取得できます。
+従って、大きなファイルでも瞬時に取得する事ができます。又、CSVCSVファイルも上記のように
+同様に行数（件数）を取得する事ができます。（CSVファイルの場合マイナス１します）
+行数とはWord 等でも同じですが改行の数を取得しております。従って一番最後の文字を書き終
+わった後で改行して保存すると１行多く取得しているかのように錯覚される方がおられます。
+必要であればその辺の処理をして下さい。
