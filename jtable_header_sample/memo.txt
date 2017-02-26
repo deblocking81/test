@@ -1,0 +1,33 @@
+http://qoofast.blog76.fc2.com/blog-entry-2.html
+
+Multi width header 複数列幅のヘッダ (JTable)
+
+JTableの列見出し(JTableHeader)をカスタマイズして、複数列にまたがる見出しを作ってみる。 
+HTMLのtableにおけるcolspanみたいなもの。 
+
+ググってみるとこんなのが見つかった。 
+http://www.crionics.com/products/opensource/faq/swing_ex/JTableExamples1.html 
+（当該ページが削除されたためWebArchiveに保存されたページにリンクしました）
+
+http://web.archive.org/web/20090208222013id_/http://www.crionics.com/products/opensource/faq/swing_ex/JTableExamples1.html
+
+上記サイトのGroupable HeaderとかMulti-Width Headerのサンプルがズバリ目指すもの。 
+というか、これがそのまま動けばなんの問題もなかったのだが、JRE6.0では動かないので修正してみた。 
+
+GroupableHeaderExample on JRE6 
+
+修正箇所の要点は以下の通り 
+1). setUI(new GroupableTableHeaderUI()) はGroupableTableHeaderのコンストラクタではなく、 
+updateUIをオーバライドしてそこで行う。 
+コンストラクタでsetUIしても、updateUIでLook&Feel標準のものに置き換えられてしまうため。 
+You should call setUI(new GroupableTableHeaderUI()) not in the constructor of GroupableTableHeader but in overrided updateUI() 
+
+2). TableHeader.getHeaderRenderer()がnullを返す場合があるので、 
+TabelCellRederer.getDefaultRenderer()を代用する(GroupableTableHeaderUI.java の64,86行)。 
+nullを返す理由はよくわからないけど、たぶんSwingの内部仕様変更でしょう。 
+You should use TabelCellRederer.getDefaultRenderer() when TableHeader.getHeaderRenderer() returns null (at GroupableTableHeaderUI.java line 64 and 86). 
+
+3). TableColumnModel.getColumnMargin()の戻り値を適用しない(代わりに0を使う)。 
+こうしないと、ヘッダーの境界が1ドットづつずれる。これも仕様変更？ 
+当該の箇所は GroupableTableHeader.java 58行目と、GroupableTableHeaderUI.java 27行目。 
+Do not apply the return value of TableColumnModel.getColumnMargin() (Use 0 instead). 
